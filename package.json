@@ -1,0 +1,22 @@
+{
+  "name": "cordova-plugin-push-master",
+  "version": "1.0.1",
+  "description": "push for ionic",
+  "cordova": {
+    "id": "cordova-plugin-push-master",
+    "platforms": []
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/pysGitHub/PushPlugin.git"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "thomas_pan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pysGitHub/PushPlugin/issues"
+  },
+  "homepage": "https://github.com/pysGitHub/PushPlugin#readme"
+}
