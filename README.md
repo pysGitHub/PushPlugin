@@ -8,10 +8,7 @@ push for ionic
 
 
 
-
-
-
- // 拿token
+     // 拿token
       cordova.plugins.PushPlugin.initPushMethod("ios", (message)=> {
         alert("deviceToken = "+message)
         // 存储接收到的deviceToken
@@ -45,12 +42,14 @@ push for ionic
       
  3.在ios平台中添加下列代码
  ① 在AppDelegte.h声明下列属性：
-            @property (nonatomic,strong)NSDictionary * launchOptionDic;
+           
+           @property (nonatomic,strong)NSDictionary * launchOptionDic;
             
             
             
  ② 在AppDelegate.m的入口类添加下列代码：
-         if(launchOptions){
+        
+        if(launchOptions){
          self.launchOptionDic = launchOptions;
          }
   
