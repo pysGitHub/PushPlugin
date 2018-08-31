@@ -78,10 +78,10 @@ public class PushPlugin extends CordovaPlugin {
     String localJPushToken = sharedPreferences.getString("Registration_Id", "isEmpty");
     String localFcmToken =  sharedPreferences.getString("Registration_Id_Fcm", "isEmpty");
     if (!localFcmToken.equals("isEmpty") && localFcmToken.length() > 0) {
-      callbackContext.success(localFcmToken);
+      callbackContext.success(localFcmToken+"3");
     } else {
       if (!localJPushToken.equals("isEmpty") && localJPushToken.length() > 0) {
-        callbackContext.success(localJPushToken);
+        callbackContext.success(localJPushToken+"2");
       }else 
       callbackContext.error("isEmpty");
     }
