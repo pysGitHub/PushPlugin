@@ -106,7 +106,7 @@
 
     //[PushPlugin fireDocumentEvent:@"openNotification" jsString:receiveUrlStr];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"receiveUrlStr" object:receiveUrlStr];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"receiveUrlStr" object:userInfo];
 
     
     

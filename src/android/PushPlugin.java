@@ -10,6 +10,7 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import android.content.SharedPreferences;
 
 import com.google.firebase.FirebaseApp;
@@ -18,8 +19,9 @@ import com.wistron.ptsApp.jpush.MyReceiver;
 
 import cn.jpush.android.api.JPushInterface;
 
+
 /**
- * This class echoes a string called from JavaScript.
+ * edited by Anne on 2018/9/3
  */
 public class PushPlugin extends CordovaPlugin {
   public static final String TAG = PushPlugin.class.getSimpleName();
@@ -40,6 +42,18 @@ public class PushPlugin extends CordovaPlugin {
     pluginResult.setKeepCallback(true);
     pushUrlCallbackContext.sendPluginResult(pluginResult);
 
+  }
+
+  /**
+   * 将接收到的数据回传给JS
+   *
+   * @param data 要回传的数据
+   */
+  public static void setNotifyData(String data) {
+    MyLog.d(TAG, "PushPlugin setNotifyData: " + data);
+    PluginResult result = new PluginResult(PluginResult.Status.OK, data);
+    result.setKeepCallback(true);
+    pushUrlCallbackContext.sendPluginResult(result);
   }
 
 
@@ -76,14 +90,14 @@ public class PushPlugin extends CordovaPlugin {
 
   private void getPushToken(CallbackContext callbackContext) {
     String localJPushToken = sharedPreferences.getString("Registration_Id", "isEmpty");
-    String localFcmToken =  sharedPreferences.getString("Registration_Id_Fcm", "isEmpty");
+    String localFcmToken = sharedPreferences.getString("Registration_Id_Fcm", "isEmpty");
     if (!localFcmToken.equals("isEmpty") && localFcmToken.length() > 0) {
-      callbackContext.success(localFcmToken+"3");
+      callbackContext.success(localFcmToken + "3");
     } else {
       if (!localJPushToken.equals("isEmpty") && localJPushToken.length() > 0) {
-        callbackContext.success(localJPushToken+"2");
-      }else 
-      callbackContext.error("isEmpty");
+        callbackContext.success(localJPushToken + "2");
+      } else
+        callbackContext.error("isEmpty");
     }
 
 

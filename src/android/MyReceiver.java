@@ -29,6 +29,7 @@ import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by king on 2017/10/30.
+ * Edited by Anne on 2018/9/3
  */
 
 public class MyReceiver extends BroadcastReceiver {
@@ -53,6 +54,7 @@ public class MyReceiver extends BroadcastReceiver {
         Log.i(TAG, "[MyReceiver] get Registration Id : " + regId);
         editor.putString("Registration_Id", regId);
         editor.commit();
+
       } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
         Log.i(TAG, "[MyReceiver] Received jpush CustomMessages: " + printBundle(bundle));
         parseCustomMessage(context, bundle);
@@ -73,16 +75,18 @@ public class MyReceiver extends BroadcastReceiver {
       } else if (JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
         boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
         Log.w(TAG, "[MyReceiver]" + intent.getAction() + " connected state change to " + connected);
+
       } else if ("com.wistron.swpc.pts2.action.NOTIFICATION_CLICKED".equals(intent.getAction())) {//点击推送消息
-        String url = intent.getStringExtra("MessageUrl");
+//        String url = intent.getStringExtra("MessageUrl");
+        String data = intent.getStringExtra("JSONData");
         int type = intent.getIntExtra(PushPlugin.TYPE, -1);
-        Log.i(TAG, "[MyReceiver] Notification Clicked，======pageUrl=" + url);
         Intent intentMainActivity = new Intent();
         intentMainActivity.setComponent(new ComponentName("com.wistron.swpc.pts2", "com.wistron.swpc.pts2.MainActivity"));
         intentMainActivity.setAction(Intent.ACTION_VIEW);
         intentMainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         context.startActivity(intentMainActivity);
-        PushPlugin.setNotifyUrl(intent.getStringExtra("MessageUrl"));
+//        PushPlugin.setNotifyUrl(intent.getStringExtra("MessageUrl"));
+        PushPlugin.setNotifyData(data);
         if (type != -1) {
           NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
           notificationManager.cancel(type);
@@ -91,7 +95,7 @@ public class MyReceiver extends BroadcastReceiver {
         Log.i(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
       }
     } catch (Exception e) {
-
+      e.printStackTrace();
     }
 
   }
@@ -163,6 +167,7 @@ public class MyReceiver extends BroadcastReceiver {
         Intent intentClick = new Intent(context, MyReceiver.class);
         intentClick.setAction("com.wistron.swpc.pts2.action.NOTIFICATION_CLICKED");
         intentClick.putExtra("MessageUrl", url);
+        intentClick.putExtra("JSONData", message);
         intentClick.putExtra(PushPlugin.TYPE, requestCode);
         PendingIntent pendingIntentClick = PendingIntent.getBroadcast(context, requestCode, intentClick, PendingIntent.FLAG_ONE_SHOT);
 
