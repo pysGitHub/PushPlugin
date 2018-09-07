@@ -12,7 +12,7 @@
  *
  * 2.在js文件实现下面方法
  *   - (void)initPushMethod:(CDVInvokedUrlCommand*)command;
- *   - (void)receivePushUrl:(CDVInvokedUrlCommand*)command;
+ *   - (void)receiveMessage:(CDVInvokedUrlCommand*)command;
  *
  */
 #import <Cordova/CDV.h>
@@ -27,7 +27,7 @@
 //接收appdelegate类里面的launchOptions字典数据（为了接收到在app被干掉，点击推送拿到推送消息）
 @property (nonatomic,strong)NSDictionary * dic;
 - (void)initPushMethod:(CDVInvokedUrlCommand*)command;
-- (void)receivePushUrl:(CDVInvokedUrlCommand*)command;
+- (void)receiveMessage:(CDVInvokedUrlCommand*)command;
 @end
 
 @implementation PushPlugin
@@ -65,7 +65,7 @@
     });
 }
 
-- (void)receivePushUrl:(CDVInvokedUrlCommand*)command{
+- (void)receiveMessage:(CDVInvokedUrlCommand*)command{
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeValue:) name:@"receiveUrlStr" object:nil];
     // 让command对象活下去，防止通知方法中self.myCommand为nil。
@@ -74,8 +74,8 @@
     if(self.dic){
         // 解析从AppDelegate类中拿到的字典数据
         NSDictionary *dic1 = [self.dic objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        NSString * receiveUrlStr =dic1[@"notifycontent"][@"url"];
-        [[NSUserDefaults standardUserDefaults] setObject:receiveUrlStr forKey:@"pushUrl"];
+        //        NSString * receiveUrlStr =dic1[@"notifycontent"][@"url"];
+        [[NSUserDefaults standardUserDefaults] setObject:dic1 forKey:@"pushUrl"];
         NSString * pushUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"pushUrl"];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"pushUrl"];
         dispatch_async(dispatch_get_main_queue(), ^{

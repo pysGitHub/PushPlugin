@@ -21,7 +21,8 @@ import cn.jpush.android.api.JPushInterface;
 
 
 /**
- * edited by Anne on 2018/9/3
+ * edited by Anne on 2018/9/7
+ * 修改获取推送消息数据的方法名
  */
 public class PushPlugin extends CordovaPlugin {
   public static final String TAG = PushPlugin.class.getSimpleName();
@@ -78,7 +79,7 @@ public class PushPlugin extends CordovaPlugin {
       JPushInterface.setDebugMode(true);
       return true;
     }
-    if (action.equals("receivePushUrl")) {
+    if (action.equals("receiveMessage")) {
       this.pushUrlCallbackContext = callbackContext;
       return true;
     } else if (action.equals("getPushToken")) {

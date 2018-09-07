@@ -71,7 +71,7 @@
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
     
     NSDictionary * userInfo = notification.request.content.userInfo;
-//    NSString * receiveUrlStr = userInfo[@"notifycontent"][@"url"];
+    //    NSString * receiveUrlStr = userInfo[@"notifycontent"][@"url"];
     NSString * receiveUrlStr = userInfo[@"notifycontent"][@"url"];
     // receiveUrlStr如果不等于@""，则说明是别人给正在使用得人推送一条消息，此时播放声音；否则没有声音
     if (![receiveUrlStr isEqualToString:@""]) {
@@ -98,19 +98,19 @@
     
     //在没有启动本App时，收到服务器推送消息，下拉消息会有快捷回复的按钮，点击按钮后调用的方法，根据identifier来判断点击的哪个按钮
     NSDictionary * userInfo = response.notification.request.content.userInfo;
-//    NSString * receiveUrlStr =userInfo[@"notifycontent"][@"url"];
+    //    NSString * receiveUrlStr =userInfo[@"notifycontent"][@"url"];
     NSString * receiveUrlStr =userInfo[@"notifycontent"][@"url"];
-
+    
     NSLog(@"receiveUrlStr = %@",receiveUrlStr);
     
-
+    
     //[PushPlugin fireDocumentEvent:@"openNotification" jsString:receiveUrlStr];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receiveUrlStr" object:userInfo];
-
     
     
-    [[NSUserDefaults standardUserDefaults] setObject:receiveUrlStr forKey:@"pushUrl"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"pushUrl"];
     //处理推送过来的数据
     completionHandler();
 }
