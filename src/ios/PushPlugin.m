@@ -98,7 +98,7 @@
 # pragma KVO监听方法(监听推送传的url)
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"deviceToken"]) {
-        if (change[@"new"]) {
+        if (![change[@"new"] isEqualToString:@"pan"]) {
             //如果拿到deviceToken就执行下面的方法
             [self postDeviceToken];
         }
