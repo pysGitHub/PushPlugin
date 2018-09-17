@@ -61,7 +61,7 @@
             self.pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"isEmpty"];
         }
         [self.commandDelegate sendPluginResult:self.pluginResult callbackId:self.deviceCommand.callbackId];
-        [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"deviceToken"];
+        [[NSUserDefaults standardUserDefaults] setValue:@"pan" forKey:@"deviceToken"];
     });
 }
 

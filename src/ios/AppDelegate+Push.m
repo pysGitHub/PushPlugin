@@ -29,6 +29,14 @@
             }
         }];
     }
+//    else if (IOS_VERSION >= 8.0 && IOS_VERSION < 10.0){
+//
+//        UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge |
+//        UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+//
+//        [application registerUserNotificationSettings:settings];
+//    }
     
     
     // 注册获得device Token
@@ -115,6 +123,33 @@
     completionHandler();
 }
 
+//  *******************************  目前系统是iOS9无法测   没对应的手机  **********************************
+//ios10以下版本
 
+//远程推送APP在前台  或者是在后台再次返回前台 或者重新进入程序
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary * _Nonnull)userInfo fetchCompletionHandler:(void (^ _Nonnull)(UIBackgroundFetchResult))completionHandler{
+//    
+//    /*
+//     UIApplicationStateActive 应用程序处于前台
+//     UIApplicationStateBackground 应用程序在后台，用户从通知中心点击消息将程序从后台调至前台
+//     UIApplicationStateInactive 用用程序处于关闭状态(不在前台也不在后台)，用户通过点击通知中心的消息将客户端从关闭状态调至前台
+//     */
+//    
+//    //应用程序在前台给一个提示特别消息
+//    
+//    if (application.applicationState == UIApplicationStateActive) {
+//        NSString * receiveUrlStr =userInfo[@"notifycontent"][@"url"];
+//        if (![receiveUrlStr isEqualToString:@""]) {
+//            completionHandler(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert);
+//        }else{
+//            completionHandler(UIUserNotificationTypeBadge | UIUserNotificationTypeAlert);
+//        }
+//    }else{
+//        //其他两种情况，一种在后台程序没有被杀死，另一种是在程序已经杀死。用户点击推送的消息进入app的情况处理。
+//        NSString * receiveUrlStr =userInfo[@"notifycontent"][@"url"];
+//        [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"pushUrl"];
+//        completionHandler(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert);
+//    }
+//}
 
 @end

@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-push-master",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "push for ionic",
   "cordova": {
     "id": "cordova-plugin-push-master",
