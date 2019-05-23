@@ -8,29 +8,49 @@ push for ionic
 
 
 
-     // 拿token
-      cordova.plugins.PushPlugin.initPushMethod("ios", (message)=> {
-        alert("deviceToken = "+message)
-        // 存储接收到的deviceToken
-        this.storage.set('deviceToken',message);
-        // 存储pushServerID
-        this.storage.set('pushServeID','1');
-      },
-      (error)=> {
-        // alert(error)
-      });
-
-
-      cordova.plugins.PushPlugin.getPushToken("android",(message)=> {
-        alert("deviceToken = "+message)
-        // 存储接收到的deviceToken
-        this.storage.set('deviceToken',message);
-        // 存储pushServerID
-        this.storage.set('pushServeID','2');
-      },
-      (error)=> {
-        // alert(error)
-      });
+     if (platform.versions().ios) {
+          // 拿token
+          cordova.plugins.PushPlugin.initPushMethod(
+            "ios",
+            message => {
+              // alert("deviceToken = "+message)
+              // 存储接收到的deviceToken
+              //this.storage.set('deviceToken',message);
+              global.deviceToken = message;
+              global.pushServerID = "1";
+              let pushServerID = "1";
+              this.events.publish("data:data", message, pushServerID);
+              // 存储pushServerID
+              //this.storage.set('pushServeID','1');
+              this.rootPage = "LoginPage";
+            },
+            error => {
+              this.rootPage = "LoginPage";
+            }
+          );
+        } else {
+          cordova.plugins.PushPlugin.getPushToken(
+            "android",
+            message => {
+              let deviceTokenMessage: string = message;
+              let pushServerID = deviceTokenMessage.substr(
+                deviceTokenMessage.length - 1,
+                1
+              );
+              let deviceToken = deviceTokenMessage.substr(
+                0,
+                deviceTokenMessage.length - 1
+              );
+              // 存储pushServerID
+              global.deviceToken = deviceToken;
+              global.pushServerID = pushServerID;
+              this.rootPage = "LoginPage";
+            },
+            error => {
+              this.rootPage = "LoginPage";
+            }
+          );
+        }
         
       // 拿推送消息
       cordova.plugins.PushPlugin.receivePushUrl("common",(message)=> {
