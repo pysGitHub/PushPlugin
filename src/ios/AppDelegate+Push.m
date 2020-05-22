@@ -44,27 +44,24 @@
 }
 
 
-
-
-
-
-
-
-
 // 将得到的deviceToken传给SDK
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
     
-    NSString *deviceTokenStr = [[[[deviceToken description]
-                                  stringByReplacingOccurrencesOfString:@"<" withString:@""]
-                                 stringByReplacingOccurrencesOfString:@">" withString:@""]
-                                stringByReplacingOccurrencesOfString:@" " withString:@""];
-    //这里将token传送给服务器
-    NSLog(@"将得到的deviceToken传给SDK  1 :\n%@",deviceTokenStr);
-    [[NSUserDefaults standardUserDefaults] setObject:deviceTokenStr forKey:@"deviceToken"];
-    //[[NSUserDefaults standardUserDefaults] setObject:receiveUrlStr forKey:@"pushUrl"];
-    
-    //    AppDelegate * app = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    //    app.string = deviceTokenStr;
+    if (IOS_VERSION >= 13.0) {
+        NSMutableString *deviceTokenString = [NSMutableString string];
+        const char *bytes = deviceToken.bytes;
+        NSInteger count = deviceToken.length;
+        for (int i = 0; i < count; i++) {
+            [deviceTokenString appendFormat:@"%02x", bytes[i]&0x000000FF];
+        }
+           [[NSUserDefaults standardUserDefaults] setObject:deviceTokenString forKey:@"deviceToken"];
+    } else {
+        NSString *deviceTokenStr = [[[[deviceToken description]
+          stringByReplacingOccurrencesOfString:@"<" withString:@""]
+         stringByReplacingOccurrencesOfString:@">" withString:@""]
+        stringByReplacingOccurrencesOfString:@" " withString:@""];
+           [[NSUserDefaults standardUserDefaults] setObject:deviceTokenStr forKey:@"deviceToken"];
+    }
 }
 
 
@@ -128,15 +125,15 @@
 
 //远程推送APP在前台  或者是在后台再次返回前台 或者重新进入程序
 //- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary * _Nonnull)userInfo fetchCompletionHandler:(void (^ _Nonnull)(UIBackgroundFetchResult))completionHandler{
-//    
+//
 //    /*
 //     UIApplicationStateActive 应用程序处于前台
 //     UIApplicationStateBackground 应用程序在后台，用户从通知中心点击消息将程序从后台调至前台
 //     UIApplicationStateInactive 用用程序处于关闭状态(不在前台也不在后台)，用户通过点击通知中心的消息将客户端从关闭状态调至前台
 //     */
-//    
+//
 //    //应用程序在前台给一个提示特别消息
-//    
+//
 //    if (application.applicationState == UIApplicationStateActive) {
 //        NSString * receiveUrlStr =userInfo[@"notifycontent"][@"url"];
 //        if (![receiveUrlStr isEqualToString:@""]) {
