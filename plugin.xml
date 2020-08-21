@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-push-master" version="1.0.7"
+<plugin id="cordova-plugin-push-master" version="1.0.8"
     xmlns="http://apache.org/cordova/ns/plugins/1.0" 
     xmlns:android="http://schemas.android.com/apk/res/android">
     <name>PushPlugin</name>
@@ -107,7 +107,7 @@
                 </intent-filter>
             </receiver>
             <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default" />
-            <meta-data android:name="JPUSH_APPKEY" android:value="2240619f6f6a3edb7eff0a24" />
+            <meta-data android:name="JPUSH_APPKEY" android:value="6bc2b8a8b8ef3beecbb8536f" />
         </config-file>
         <source-file src="src/android/PushPlugin.java" target-dir="src/com/wistron/ptsApp" />
         <source-file src="src/android/ExampleUtil.java" target-dir="src/com/wistron/ptsApp/jpush" />
